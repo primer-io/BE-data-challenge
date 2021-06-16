@@ -36,7 +36,7 @@ A WAL record is created each time there is an insert, update, or delete in the d
   transaction_request.token_id = payment_instrument_token_data.transaction_id
 ```
 
-- After joining the 4 records together, we only want to keep a subset of the data - the final metric should look like 
+After joining the 4 records together, we only want to keep a subset of the data - the final metric should look like 
 	```
 	{
 		"event_v2_data.id": "value",
