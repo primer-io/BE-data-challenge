@@ -1,6 +1,6 @@
 # Data Engineer Challenge
 
-We are going to simulate processing batches of WAL records. The WAL records will be used to display metrics to our customer within the dashboard, but before the data can be used, the records need to be preprocessed, joined together, and then inserted into a database (for this task, we are going to use sqlite to keep it simple, but in reality we would be using something like Elasticsearch).
+We are going to simulate processing batches of WAL records. The data from these records will be used to display metrics to our customers within the dashboard, but before the data can be used, the records need to be preprocessed, joined together, and then inserted into a database for use by our dashboard (for this task, we are going to use sqlite to keep it simple, but in reality we would be using something like Elasticsearch).
 
 ### WAL
 A WAL record is created each time there is an insert, update, or delete in the database - we will only be dealing with insert records for this exercise. Each WAL record is represented by a dictionary in Python:
