@@ -37,7 +37,8 @@ A WAL record is created each time there is an insert, update, or delete in the d
 ```
 
 After joining the 4 records together, we only want to keep a subset of the data - the final metric should look like 
-	```
+
+```
 	{
 		"event_v2_data.id": "value",
 		"event_v2_data.flow_id": "value",
@@ -55,7 +56,8 @@ After joining the 4 records together, we only want to keep a subset of the data 
 		"payment_instrument_token_data.payment_instrument_type": "value",
 		"payment_instrument_token_data.vault_data.customer_id": "value"
 	}
-	```
+```
+
 I have included the table name as well as the column to make it easier for you to know where each data point in the metric should come from, but pleae do not include the table name when inserting into the database (ie the column name for `transaction_request.vault_options.payment_method` should just be `payment_method`). You will need to create a table in sqlite to store the metric - the WAL records should have everything you need to do that including the `type` for each column. 
 
 Once the metric has been created, add the metric into the database. When finished, you should have 529 records in the database. 
