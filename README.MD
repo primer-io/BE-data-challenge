@@ -33,14 +33,14 @@ A WAL record is created each time there is an insert, update, or delete in the d
 ```
   event_v2_data.transaction_id = transaction.transaction_id
   event_v2_data.flow_id = transaction_request.flow_id
-  transaction_request.token_id = payment_instrument_token_data.transaction_id
+  transaction_request.token_id = payment_instrument_token_data.token_id
 ```
 
 After joining the 4 records together, we only want to keep a subset of the data - the final metric should look like 
 
 ```
 	{
-		"event_v2_data.id": "value",
+		"event_v2_data.event_id": "value",
 		"event_v2_data.flow_id": "value",
 		"event_v2_data.created_at": "value",
 		"event_v2_data.transaction_lifecycle_event": "value",
