@@ -78,7 +78,7 @@ Please do the challenge in Python using only the modules contained in standard l
 
 ☁️ 2. Push your work to your fork on GitHub 
 
-✉️ 3. Share both the code and your findings with us 🎉
+✉️ 3. Share both the code and your findings with us 🎉 (Please add the Github user primer-api as a reviewer)
 
 
 
