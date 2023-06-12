@@ -1,8 +1,9 @@
-# Data Engineer Challenge
+# Data Engineering Challenge
 
-We are going to simulate processing batches of WAL records. The data from these records will be used to display metrics to our customers within the dashboard, but before the data can be used, the records need to be preprocessed, joined together, and then inserted into a database for use by our dashboard (for this task, we are going to use sqlite to keep it simple, but in reality we would be using something like Elasticsearch).
+In this challenge, we will simulate the processing of batches of Write-Ahead Log (WAL) records. These records contain valuable data that will be utilized to generate metrics for our customers on the dashboard. However, prior to utilizing the data, it must undergo preprocessing, merging, and insertion into a database. To simplify the task, we will employ SQLite, although in real-world scenarios, a more robust solution like Elasticsearch would be employed.
 
 ### WAL
+
 A WAL record is created each time there is an insert, update, or delete in the database - we will only be dealing with insert records for this exercise. Each WAL record is represented by a dictionary in Python:
   
 ```
@@ -28,7 +29,8 @@ A WAL record is created each time there is an insert, update, or delete in the d
 	- payment_instrument_token_data
 
 ## The Task
-`wal.json` contains a list of WAL records - in order to generate the dashboard metric, we need to join an `event_v2_data`, `transaction`, `transaction_request`, and `payment_instrument_token_data` record together. Records can be joined like this:
+
+The `wal.json` file consists of a collection of Write-Ahead Log (WAL) records. Our objective is to generate a dashboard metric by combining information from the `event_v2_data`, `transaction`, `transaction_request`, and `payment_instrument_token_data` records. The join conditions for the records are as follows:
 
 ```
   event_v2_data.transaction_id = transaction.transaction_id
@@ -36,7 +38,7 @@ A WAL record is created each time there is an insert, update, or delete in the d
   transaction_request.token_id = payment_instrument_token_data.token_id
 ```
 
-After joining the 4 records together, we only want to keep a subset of the data - the final metric should look like 
+After joining the records, we only need to retain a subset of the data to create the final metric, which should have the following structure:
 
 ```
 	{
@@ -58,11 +60,11 @@ After joining the 4 records together, we only want to keep a subset of the data 
 	}
 ```
 
-I have included the table name as well as the column to make it easier for you to know where each data point in the metric should come from, but please do not include the table name when inserting into the database (ie the column name for `transaction_request.vault_options.payment_method` should just be `payment_method`). You will need to create a table in sqlite to store the metric - the WAL records should have everything you need to do that including the `type` for each column. 
+To facilitate comprehension, we have included the table name along with each column name. However, when inserting the data into the database, please exclude the table name (e.g., use `payment_method` instead of `transaction_request.vault_options.payment_method`). You will need to create a table in SQLite to store the metric, and the WAL records contain all the necessary information, including the data type for each column.
 
-Once the metric has been created, add the metric into the database. When finished, you should have 529 records in the database. 
+Once the metric is created, it should be added to the database. By the end of the task, there should be 529 records in the database.
 
-Please do the challenge in Python using only the modules contained in standard library - do not use third party libraries such as pandas. `main.py` contains a small amount of code to get you started, but feel free to keep or discard it. 
+The challenge should be tackled using Python and only modules from the standard library. Avoid using third-party libraries like `pandas`. The file `main.py` provides some initial code to assist you, but you are free to keep or discard it as needed.
 
 ## What We're Looking For
 
@@ -80,6 +82,7 @@ Please do the challenge in Python using only the modules contained in standard l
 
 ✉️ 3. Share both the code and your findings with us (please add the Github user primer-api as a reviewer) 🎉 
 
+We look forward to discussing your solution!
 
 
 
