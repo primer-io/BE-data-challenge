@@ -74,16 +74,8 @@ The challenge should be tackled using Python and only modules from the standard 
 
 ☑️  Good documentation
 
-## Finishing Up 📈
+## Finishing Up 📈 
 
-📄 1. Document your findings, how did you go about solving the challenge?
-
-☁️ 2. Push your work to your fork on GitHub 
-
-✉️ 3. Share both the code and your findings with us (please add the Github user primer-api as a reviewer) 🎉 
+When you are finished, email it back to us as a zip file. 
 
 We look forward to discussing your solution!
-
-
-
-
