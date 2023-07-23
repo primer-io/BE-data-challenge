@@ -27,7 +27,7 @@ Primer Task - Finished execution
 A database called `metrics.db` will be created in the root folder.
 
 ## Dataset
-The dataset used in this application can found in the root folder: `./wal.json`
+The dataset used in this application can be found in the root folder: `./wal.json`
 
 ## Candidate's Notes
 ### Join
