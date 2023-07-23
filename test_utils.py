@@ -4,7 +4,7 @@ Test cases for join functions
 
 from utils import merge_join, hash_join, nested_loop_join
 
-
+# Tests if the join returns the correct number of rows
 input_test_0 = {
     "employees": [
         {"id": 1, "user_id": 303, "name": "Mike"},
@@ -20,6 +20,7 @@ input_test_0 = {
     "expected": 3,
 }
 
+# Tests one-to-many case
 input_test_1 = {
     "employees": [
         {"id": 1, "user_id": 303, "name": "Mike"},
@@ -36,6 +37,7 @@ input_test_1 = {
     "expected": 4,
 }
 
+# Tests many-to-one case
 input_test_2 = {
     "absences": [
         {"id": 1, "user_id": 303, "date": "2015-03-01"},
@@ -53,6 +55,7 @@ input_test_2 = {
     "expected": 5,
 }
 
+# Test the correctness of the join
 input_test_3 = {
     "employees": [
         {"id": 1, "user_id": 303, "name": "Mike"},
@@ -68,6 +71,7 @@ input_test_3 = {
     "expected": {"id": 1, "user_id": 303, "name": "Mike", "role": "Manager"},
 }
 
+# Tests when one of the dictionary is null
 input_test_4 = {
     "employees": None,
     "roles": [
