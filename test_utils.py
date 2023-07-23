@@ -68,6 +68,17 @@ input_test_3 = {
     "expected": {"id": 1, "user_id": 303, "name": "Mike", "role": "Manager"},
 }
 
+input_test_4 = {
+    "employees": None,
+    "roles": [
+        {"id": 1, "user_id": 303, "role": "Manager"},
+        {"id": 2, "user_id": 304, "role": "Assistant"},
+        {"id": 3, "user_id": 305, "role": "Assistant"},
+    ],
+    "key": "user_id",
+    "expected": []
+}
+
 
 def test_nested_loop_0():
     assert (
@@ -122,6 +133,11 @@ def test_nested_loop_3():
     )
     assert output[0] == input_test_3["expected"]
 
+def test_nested_loop_4():
+    output = list(
+        nested_loop_join(input_test_4["employees"], input_test_4["roles"], input_test_4["key"])
+    )
+    assert output == input_test_4["expected"]
 
 def test_merge_0():
     assert (
@@ -176,6 +192,12 @@ def test_merge_3():
     )
     assert output[0] == input_test_3["expected"]
 
+def test_merge_4():
+    output = list(
+        merge_join(input_test_4["employees"], input_test_4["roles"], input_test_4["key"])
+    )
+    assert output == input_test_4["expected"]
+
 
 def test_hash_0():
     assert (
@@ -227,3 +249,9 @@ def test_hash_3():
         hash_join(input_test_3["employees"], input_test_3["roles"], input_test_3["key"])
     )
     assert output[0] == input_test_3["expected"]
+
+def test_hash_4():
+    output = list(
+        hash_join(input_test_4["employees"], input_test_4["roles"], input_test_4["key"])
+    )
+    assert output == input_test_4["expected"]
