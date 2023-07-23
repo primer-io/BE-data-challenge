@@ -29,7 +29,7 @@ A database called `metrics.db` will be created in the root folder.
 ## Dataset
 The dataset used in this application can found in the root folder: `./wal.json`
 
-## Candidate Notes
+## Candidate's Notes
 ### Join
 Initially, I approached the dictionary join using a simple `nested loop join`. It didn't look good in my opinion, so I spent some time investigating some alternatives: `sort-merge join` and `hash join`. Implemented both approaches and then compared the execution time. The `Hash Join` performed better in this situation, so I choose it for my final solution.
 
