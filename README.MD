@@ -1,81 +1,39 @@
-# Data Engineering Challenge
+# Primer Task
 
-In this challenge, we will simulate the processing of batches of Write-Ahead Log (WAL) records. These records contain valuable data that will be utilized to generate metrics for our customers on the dashboard. However, prior to utilizing the data, it must undergo preprocessing, merging, and insertion into a database. To simplify the task, we will employ SQLite, although in real-world scenarios, a more robust solution like Elasticsearch would be employed.
+This script was created as take-home assignment, its purpose is to load and transform a JSON file, then load into a SQLite database (`metrics.db`) in a table called `metrics`.
 
-### WAL
+## Usage
+Run the script using `python`. No need to install extra libraries.
 
-A WAL record is created each time there is an insert, update, or delete in the database - we will only be dealing with insert records for this exercise. Each WAL record is represented by a dictionary in Python:
-  
+```console
+$ python main.py
 ```
-  ## INSERT
-  {
-    "change": [
-      {
-        "kind": "insert",
-        "schema": "public",
-        "table": "foo",
-        "columnnames": ["a", "b", "c"],
-        "columntypes": ["integer", "character varying(30)", "timestamp without time zone"],
-        "columnvalues": [1, "Backup and Restore", "2018-03-27 12:05:29.914496"]
-      }
-    ]
-  }
+## Example 
+```console
+$ python main.py
 
-```	
-- The WAL records are produced by 4 tables called:
-	- event_v2_data
-	- transaction
-	- transaction_request
-	- payment_instrument_token_data
-
-## The Task
-
-The `wal.json` file consists of a collection of Write-Ahead Log (WAL) records. Our objective is to generate a dashboard metric by combining information from the `event_v2_data`, `transaction`, `transaction_request`, and `payment_instrument_token_data` records. The join conditions for the records are as follows:
-
+Primer Task - Starting execution
+Primer Task - Loading data from: ./wal.json
+Primer Task - Data loaded. 1000 records found.
+Primer Task - Transforming data...
+Primer Task - Data transformed.
+Primer Task - Processing metrics table...
+Primer Task - Metrics table processed. Resulting 529 rows.
+Primer Task - Creating table if non existent
+Primer Task - Inserting rows into the database
+Primer Task - Rows loaded into the database with success.
+Primer Task - Finished execution
 ```
-  event_v2_data.transaction_id = transaction.transaction_id
-  event_v2_data.flow_id = transaction_request.flow_id
-  transaction_request.token_id = payment_instrument_token_data.token_id
-```
+A database called `metrics.db` will be created in the root folder.
 
-After joining the records, we only need to retain a subset of the data to create the final metric, which should have the following structure:
+## Dataset
+The dataset used in this application can found in the root folder: `./wal.json`
 
-```
-	{
-		"event_v2_data.event_id": "value",
-		"event_v2_data.flow_id": "value",
-		"event_v2_data.created_at": "value",
-		"event_v2_data.transaction_lifecycle_event": "value",
-		"event_v2_data.error_details.decline_reason": "value",
-		"event_v2_data.error_details.decline_type": "value",
-		"transaction_request.vault_options.payment_method": "value",
-		"transaction.transaction_id": "value",
-		"transaction.transaction_type": "value",
-		"transaction.amount": "value",
-		"transaction.currency_code": "value",
-		"transaction.processor_merchant_account_id": "value",
-		"payment_instrument_token_data.three_d_secure_authentication": "value",
-		"payment_instrument_token_data.payment_instrument_type": "value",
-		"payment_instrument_token_data.vault_data.customer_id": "value"
-	}
-```
+## Candidate Notes
+### Join
+Initially, I approached the dictionary join using a simple `nested loop join`. It didn't look good in my opinion, so I spent some time investigating some alternatives: `sort-merge join` and `hash join`. Implemented both approaches and then compared the execution time. The `Hash Join` performed better in this situation, so I choose it for my final solution.
 
-To facilitate comprehension, we have included the table name along with each column name. However, when inserting the data into the database, please exclude the table name (e.g., use `payment_method` instead of `transaction_request.vault_options.payment_method`). You will need to create a table in SQLite to store the metric, and the WAL records contain all the necessary information, including the data type for each column.
+![Perfomance comparison](performance_joins.png)
 
-Once the metric is created, it should be added to the database. By the end of the task, there should be 529 records in the database.
-
-The challenge should be tackled using Python and only modules from the standard library. Avoid using third-party libraries like `pandas`. The file `main.py` provides some initial code to assist you, but you are free to keep or discard it as needed.
-
-## What We're Looking For
-
-☑️  Working code
-
-☑️  Clean code
-
-☑️  Good documentation
-
-## Finishing Up 📈 
-
-When you are finished, email it back to us as a zip file. 
-
-We look forward to discussing your solution!
+### Null columns
+I could not find valid entries for some of the required metrics columns, for instance `payment_instrument_token_data.vault_data.customer_id`, the column `payment_instrument_token_data.vault_data` seems to be always `null`.
