@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "primer-data-engineer-challenge"
+version = "0.1.0"
+description = ""
+authors = ["Marcus Lira <marcuslira@gmail.com>"]
+readme = "README.md"
+packages = [{include = "primer_data_engineer_challenge"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^6.0.0"
+mypy = "^1.4.1"
+black = "^23.7.0"
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
