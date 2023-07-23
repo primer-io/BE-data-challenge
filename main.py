@@ -128,6 +128,10 @@ def generate_ddl(tables, target_name, target_schema):
 
 
 def generate_dml(rows, target_name, target_schema):
+    """
+    Generates SQL DML string to insert all rows at once
+    """
+
     statement = "INSERT INTO {target_name} VALUES \n{values}"
     values = []
     for r in rows:
@@ -151,7 +155,11 @@ def generate_dml(rows, target_name, target_schema):
     return statement.format(target_name=target_name, values=",\n".join(values))
 
 
-def load_into_database(create_statement, insert_statement):
+def load_into_database(target_name, create_statement, insert_statement):
+    """
+    Connects to database and runs the DDL and DML statements passed by arguments
+    """
+
     con = sqlite3.connect("metrics.db")
     cur = con.cursor()
 
@@ -160,7 +168,7 @@ def load_into_database(create_statement, insert_statement):
     cur.execute(create_statement)
 
     # Trucating the table to avoid duplicated load
-    cur.execute("DELETE from metrics;")
+    cur.execute("DELETE from {target_name};".format(target_name=target_name))
 
     # Insert all rows at once
     log("Inserting rows into the database")
@@ -185,14 +193,16 @@ def main():
     # join tables returning a list of merged rows/events
     rows = process_metrics(tables)
 
+    target_name = "metrics"
+
     # generate metric table DDL based on specified columns
-    create_statement = generate_ddl(tables, "metrics", METRICS_SCHEMA)
+    create_statement = generate_ddl(tables, target_name, METRICS_SCHEMA)
 
     # generate insert DML
-    insert_statement = generate_dml(rows, "metrics", METRICS_SCHEMA)
+    insert_statement = generate_dml(rows, target_name, METRICS_SCHEMA)
 
     # insert data to database
-    load_into_database(create_statement, insert_statement)
+    load_into_database(target_name, create_statement, insert_statement)
 
     # end
     log("Finished execution")
