@@ -40,7 +40,7 @@ def transform_data(records):
     """
     Process and transform data from a log to key:value structure, splitting rows by database
     """
-    log("Processing data...")
+    log("Transforming data...")
     tables = {}
     for r in records:
         change = r["change"][0]
@@ -64,7 +64,7 @@ def transform_data(records):
         # Flattens the dictionary and add the record to table
         tables[table_name]["records"].append(flatten_dict(entry))
 
-    log("Data processed.")
+    log("Data transformed.")
     return tables
 
 
