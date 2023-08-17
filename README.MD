@@ -68,14 +68,14 @@ The challenge should be tackled using Python and only modules from the standard 
 
 ## What We're Looking For
 
-☑️  Working code
+☑️  Well-Organized Working code
 
-☑️  Clean code
+☑️  QA and testing strategy
 
-☑️  Good documentation
+☑️  Documentation
 
 ## Finishing Up 📈 
 
-When you are finished, email it back to us as a zip file. 
+When you are finished, email it back to us as a zip file. Our engineers will review the code as if it was a Merge Request and being shipped to production. 
 
 We look forward to discussing your solution!
