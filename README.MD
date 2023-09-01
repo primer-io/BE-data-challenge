@@ -1,4 +1,4 @@
-# Data Engineering Challenge
+# Data Challenge
 
 In this challenge, we will simulate the processing of batches of Write-Ahead Log (WAL) records. These records contain valuable data that will be utilized to generate metrics for our customers on the dashboard. However, prior to utilizing the data, it must undergo preprocessing, merging, and insertion into a database. To simplify the task, we will employ SQLite, although in real-world scenarios, a more robust solution like Elasticsearch would be employed.
 
